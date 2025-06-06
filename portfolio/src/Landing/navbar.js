@@ -5,46 +5,77 @@ import { Home as HomeIcon, Person as PersonIcon, Work as WorkIcon, MailOutline a
 const Nav = styled.nav`
   background: linear-gradient(to right, #1f2937, #111827);
   color: #e5e7eb;
-  padding: 0.5rem 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 10;
+  @media (max-width: 1024px) {
+    padding: 0.5rem 0.75rem;
+  }
+  @media (max-width: 768px) {
+    padding: 0.15rem 0.15rem;
+  }
 `;
 
 const NavContainer = styled.div`
-  max-width: 1100px;
+  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 1024px) {
+    max-width: 1100px;
+  }
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 0.10rem;
+  }
 `;
 
-const NavTitle = styled.h1`
-  font-size: 1.25rem;
+const NavTitle = styled.button`
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   font-weight: 700;
+  color: #e5e7eb;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.3s ease;
+  &:hover {
+    color: #3b82f6;
+  }
+  @media (max-width: 768px) {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+  }
   @media (max-width: 480px) {
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 1.6vw, 1.1rem);
   }
 `;
 
 const NavList = styled.ul`
   display: flex;
-  gap: 1.25rem;
+  gap: 1.5rem;
   align-items: center;
+  @media (max-width: 768px) {
+    gap: 1.25rem;
+  }
   @media (max-width: 480px) {
     position: fixed;
     top: 0;
     right: 0;
     height: 100vh;
-    width: 90px; /* Reduced width for thinner sidebar */
+    width: 65px;
     background: #1f2937;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     padding-top: 4rem;
-    gap: 1.5rem;
-    transform: ${props => (props.isOpen ? 'translateX(0)' : 'translateX(100%)')};
+    gap: 2rem;
+    transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
     transition: transform 0.3s ease-in-out;
     box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
     margin: 0;
@@ -66,14 +97,22 @@ const NavLink = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   &:hover {
     color: #3b82f6;
   }
   & > svg {
+    width: 32px;
+    height: 32px;
+  }
+  @media (max-width: 768px) {
     width: 28px;
     height: 28px;
+    & > svg {
+      width: 28px;
+      height: 28px;
+    }
   }
   @media (max-width: 480px) {
     width: 24px;
@@ -90,7 +129,7 @@ const Tooltip = styled.span`
   @media (min-width: 481px) {
     display: block;
     position: absolute;
-    top: 150%;
+    top: 100%;
     left: 0;
     transform: translateY(-50%);
     background: #1f2937;
@@ -102,10 +141,10 @@ const Tooltip = styled.span`
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s ease, visibility 0.2s ease;
-    margin-left: 0.5rem;
+    margin-left: 0.75rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     ${NavItem}:hover & {
-      opacity: 100;
+      opacity: 1;
       visibility: visible;
     }
   }
@@ -142,7 +181,7 @@ const CloseButton = styled.button`
   }
 `;
 
-function NavBar() {
+function NavBar({ onRefresh }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const scrollToSection = (id) => {
@@ -150,13 +189,18 @@ function NavBar() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsOpen(false); // Close sidebar after clicking a link
+    setIsOpen(false);
+  };
+
+  const refreshPage = () => {
+    onRefresh();
+    window.location.reload();
   };
 
   return (
     <Nav>
       <NavContainer>
-        <NavTitle>My Portfolio</NavTitle>
+        <NavTitle onClick={refreshPage}>My Portfolio</NavTitle>
         <ToggleButton onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? '✕' : '☰'}
         </ToggleButton>

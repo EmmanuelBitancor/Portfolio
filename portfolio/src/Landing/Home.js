@@ -7,29 +7,49 @@ const PageWrapper = styled.div`
   color: #e5e7eb;
   scroll-behavior: smooth;
   min-height: 100vh;
-  margin: 0;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  margin: 0;
+  box-sizing: border-box;
 `;
 
 const HeroSection = styled.section`
-  min-height: 90vh;
+  min-height: 100vh;
   background: linear-gradient(to bottom right, #1f2937, #111827);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 3rem 1.5rem;
   width: 100%;
+  box-sizing: border-box;
+  @media (max-width: 1024px) {
+    min-height: 70vh;
+    padding: 2rem 1rem;
+  }
+  @media (max-width: 768px) {
+    min-height: 75vh;
+    padding: 1.5rem 0.75rem;
+  }
+  @media (max-width: 480px) {
+    min-height: 75vh;
+    padding: 1rem 0.5rem;
+  }
 `;
 
 const Container = styled.div`
-  max-width: 1100px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 0.75rem;
+  padding: 0 1.5rem;
   box-sizing: border-box;
+  @media (max-width: 1024px) {
+    max-width: 1100px;
+    padding: 0 1rem;
+  }
   @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 0.75rem;
+  }
+  @media (max-width: 480px) {
     padding: 0 0.5rem;
   }
 `;
@@ -39,11 +59,15 @@ const HeroContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2.5rem;
   width: 100%;
+  @media (max-width: 1024px) {
+    gap: 2rem;
+  }
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
+    align-items: center;
   }
 `;
 
@@ -56,23 +80,17 @@ const HeroContent = styled.div`
 `;
 
 const HeroTitle = styled.h2`
-  margin-top: -2rem;
-  font-size: 2rem;
+  font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   line-height: 1.2;
   background: linear-gradient(to right, #3b82f6, #60a5fa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: fadeIn 1s ease-out, typing 2s steps(30, end) forwards;
+  display: inline-block;
   white-space: nowrap;
   overflow: hidden;
-  @media (min-width: 768px) {
-    font-size: 3.5rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 1.75rem;
-  }
+  animation: fadeIn 1s ease-out, typing 3s steps(40) forwards;
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -81,44 +99,60 @@ const HeroTitle = styled.h2`
     from { width: 0; }
     to { width: 100%; }
   }
-`;
-
-const HeroText = styled.p`
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-  color: #d1d5db;
-  @media (min-width: 768px) {
-    font-size: 1.25rem;
+  @media (max-width: 768px) {
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
+    margin-bottom: 1.25rem;
+    animation: fadeIn 1s ease-out, typing 2.5s steps(35) forwards;
   }
   @media (max-width: 480px) {
-    font-size: 0.9rem;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    animation: fadeIn 1s ease-out, typing 2s steps(30) forwards;
   }
 `;
 
-const HeroButton = styled.a`
+const HeroText = styled.div`
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  margin-bottom: 1.75rem;
+  color: #d1d5db;
+  line-height: 1.6;
+  @media (max-width: 768px) {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 480px) {
+    font-size: clamp(0.85rem, 2.2vw, 1rem);
+  }
+`;
+
+const HeroButton = styled.button`
   display: inline-block;
   background-color: #3b82f6;
   color: white;
-  padding: 0.6rem 1.2rem;
+  padding: 0.875rem 1.75rem;
   border-radius: 0.5rem;
   font-weight: 600;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
     background-color: #2563eb;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0,0.2);
+  }
+  @media (max-width: 768px) {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
   }
   @media (max-width: 480px) {
-    padding: 0.5rem 1rem;
+    padding: 0.625rem 1rem;
     font-size: 0.9rem;
   }
 `;
 
 const HeroImage = styled.img`
-  margin-top: -5rem;
-  width: 480px;
-  height: 500px;
+  width: clamp(250px, 40vw, 500px);
+  height: clamp(280px, 50vw, 520px);
   object-fit: contain;
   border-radius: 1rem;
   transition: opacity 0.5s ease, transform 0.3s ease;
@@ -129,23 +163,26 @@ const HeroImage = styled.img`
   &:hover {
     transform: ${props => (props.isVisible ? 'scale(1.05)' : 'scale(0.95)')};
   }
+  @media (max-width: 1024px) {
+    width: clamp(220px, 35vw, 400px);
+    height: clamp(240px, 45vw, 420px);
+  }
   @media (max-width: 768px) {
-    width: 250px;
-    height: 300px;
+    width: clamp(200px, 50vw, 300px);
+    height: clamp(220px, 55vw, 320px);
   }
   @media (max-width: 480px) {
-    width: 220px;
-    height: 260px;
+    width: clamp(180px, 45vw, 260px);
+    height: clamp(200px, 50vw, 280px);
   }
 `;
 
 const DetailsCard = styled.div`
-  margin-top: -5rem;
-  width: 380px;
-  height: 400px;
+  width: clamp(250px, 40vw, 400px);
+  height: clamp(280px, 50vw, 420px);
   background: transparent;
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -157,124 +194,165 @@ const DetailsCard = styled.div`
   &:hover {
     transform: ${props => (props.isVisible ? 'scale(1.05)' : 'scale(0.95)')};
   }
+  @media (max-width: 1024px) {
+    width: clamp(220px, 35vw, 360px);
+    height: clamp(240px, 45vw, 380px);
+    padding: 1.5rem;
+  }
   @media (max-width: 768px) {
-    width: 250px;
-    height: 300px;
-    padding: 1rem;
+    width: clamp(200px, 50vw, 300px);
+    height: clamp(220px, 55vw, 320px);
+    padding: 1.25rem;
   }
   @media (max-width: 480px) {
-    width: 220px;
-    height: 260px;
-    padding: 0.75rem;
+    width: clamp(180px, 45vw, 260px);
+    height: clamp(200px, 50vw, 280px);
+    padding: 1rem;
   }
 `;
 
 const DetailsTitle = styled.h3`
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
   font-weight: 700;
   color: #e5e7eb;
   margin-bottom: 1rem;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
-  animation: typing 1.5s steps(20, end) forwards;
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 1rem;
-  }
+  display: inline-block;
+  animation: typing 2s steps(20) forwards;
   @keyframes typing {
     from { width: 0; }
     to { width: 100%; }
+  }
+  @media (max-width: 768px) {
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    animation: typing 1.8s steps(18) forwards;
+  }
+  @media (max-width: 480px) {
+    font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+    animation: typing 1.5s steps(16) forwards;
   }
 `;
 
 const DetailsText = styled.p`
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
   color: #d1d5db;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   white-space: nowrap;
   text-align: center;
   overflow: hidden;
-  animation: typing 1.5s steps(30, end) forwards;
+  display: inline-block;
+  animation: typing 2s steps(30) forwards;
   animation-delay: ${props => props.delay || 0}s;
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
   @keyframes typing {
     from { width: 0; }
     to { width: 100%; }
   }
+  @media (max-width: 768px) {
+    font-size: clamp(0.8rem, 2.2vw, 1rem);
+    animation: typing 1.8s steps(28) forwards;
+  }
+  @media (max-width: 480px) {
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+    animation: typing 1.5s steps(25) forwards;
+  }
 `;
 
 const Section = styled.section`
-  padding: 3rem 1rem;
-  background: ${props => props.bg || 'transparent'};
+  padding: 4rem 1.5rem;
+  background: ${props => props.bg || 'linear-gradient(to bottom right, #1f2937, #111827)'};
    background: linear-gradient(to bottom right, #1f2937, #111827);
   width: 100%;
+  box-sizing: border-box;
+  @media (max-width: 1024px) {
+    padding: 3rem 1rem;
+  }
   @media (max-width: 768px) {
+    padding: 2.5rem 0.75rem;
+  }
+  @media (max-width: 480px) {
     padding: 2rem 0.5rem;
   }
 `;
 
 const SectionTitle = styled.h2`
-  font-size: 2rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 700;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   background: linear-gradient(to right, #3b82f6, #60a5fa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  @media (max-width: 768px) {
+    font-size: clamp(1.75rem, 3.5vw, 2rem);
+    margin-bottom: 2rem;
+  }
   @media (max-width: 480px) {
-    font-size: 1.75rem;
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    margin-bottom: 1.5rem;
   }
 `;
 
 const AboutContent = styled.div`
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2rem;
+  gap: 2.5rem;
   color: #d1d5db;
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
   line-height: 1.6;
+  @media (max-width: 1024px) {
+    gap: 2rem;
+    max-width: 900px;
+  }
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 1.5rem;
-    font-size: 0.9rem;
+    align-items: center;
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
+  }
+  @media (max-width: 480px) {
+    gap: 1rem;
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
   }
 `;
 
 const AboutImage = styled.img`
-  width: 450px;
-  height: 550px;
-  object-fit: cover;
+  margin-top: -5rem;
+  width: clamp(300px, 30vw, 400px);
+  height: clamp(300px, 30vw, 400px);
+  object-fit: contain;
   border-radius: 1rem;
   transition: all 0.3s ease;
   max-width: 100%;
+  flex-shrink: 0;
   &:hover {
     transform: scale(1.05);
   }
+  @media (max-width: 1024px) {
+    width: clamp(250px, 25vw, 350px);
+    height: clamp(250px, 25vw, 350px);
+  }
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
+    margin-top: 0;
+    width: clamp(200px, 40vw, 250px);
+    height: clamp(200px, 40vw, 250px);
   }
   @media (max-width: 480px) {
-    width: 150px;
-    height: 150px;
+    width: clamp(150px, 35vw, 200px);
+    height: clamp(150px, 35vw, 200px);
   }
 `;
 
 const AboutTextContainer = styled.div`
+  margin-top: -5rem;
   flex: 1;
   text-align: left;
   @media (max-width: 768px) {
+    margin-top: 0;
     text-align: center;
   }
 `;
@@ -282,14 +360,20 @@ const AboutTextContainer = styled.div`
 const TechStackContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
   flex-wrap: wrap;
+  @media (max-width: 1024px) {
+    gap: 2rem;
+    margin-top: 2rem;
+  }
   @media (max-width: 768px) {
     gap: 1.5rem;
+    margin-top: 1.5rem;
   }
   @media (max-width: 480px) {
     gap: 1rem;
+    margin-top: 1rem;
   }
 `;
 
@@ -297,45 +381,60 @@ const TechStackItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   color: #e5e7eb;
-  font-size: 0.9rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   font-weight: 500;
   transition: all 0.3s ease;
   &:hover {
     transform: translateY(-3px);
     color: #3b82f6;
   }
+  @media (max-width: 768px) {
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  }
   @media (max-width: 480px) {
-    font-size: 0.85rem;
+    font-size: clamp(0.8rem, 1.6vw, 0.9rem);
   }
 `;
 
 const TechStackIcon = styled.img`
   background-color: #3b82f6;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
+  @media (max-width: 1024px) {
+    width: 40px;
+    height: 40px;
+  }
   @media (max-width: 768px) {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
   @media (max-width: 480px) {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 `;
 
 const ProjectGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
   max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.75rem;
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
   }
 `;
 
@@ -349,44 +448,53 @@ const ProjectCard = styled.div`
     transform: translateY(-5px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
-  @media (max-width: 480px) {
-    max-width: 280px;
+  @media (max-width: 768px) {
+    max-width: 340px;
     margin: 0 auto;
+  }
+  @media (max-width: 480px) {
+    max-width: 300px;
   }
 `;
 
 const ProjectImage = styled.img`
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
-  @media (max-width: 480px) {
-    height: 140px;
-  }
 `;
 
 const ProjectContent = styled.div`
-  padding: 1rem;
+  padding: 1.25rem;
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
   @media (max-width: 480px) {
     padding: 0.75rem;
   }
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: 1.25rem;
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
   font-weight: 600;
   color: #e5e7eb;
   margin-bottom: 0.75rem;
+  @media (max-width: 768px) {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+  }
   @media (max-width: 480px) {
-    font-size: 1rem;
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
   }
 `;
 
 const ProjectDescription = styled.p`
   color: #d1d5db;
-  font-size: 0.9rem;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   margin-bottom: 0.75rem;
+  @media (max-width: 768px) {
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+  }
   @media (max-width: 480px) {
-    font-size: 0.8rem;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
   }
 `;
 
@@ -397,24 +505,37 @@ const ProjectLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
+  @media (max-width: 768px) {
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+  }
   @media (max-width: 480px) {
-    font-size: 0.8rem;
+    font-size: clamp(0.75rem, 2vw, 0.85rem);
   }
 `;
 
 const ContactContainer = styled.div`
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 2rem;
   align-items: center;
   justify-content: center;
   width: 100%;
+  @media (max-width: 1024px) {
+   flex-direction: column;
+    max-width: 700px;
+    gap: 1.75rem;
+  }
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
+    gap: 1.5rem;
+    max-width: 700px;
+  }
+  @media (max-width: 480px) {
+   flex-direction: column;
+    gap: 1rem;
+    max-width: 700px;
   }
 `;
 
@@ -422,17 +543,22 @@ const ContactItem = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   color: #e5e7eb;
-  font-size: 0.9rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   text-decoration: none;
   transition: all 0.3s ease;
   &:hover {
     color: #3b82f6;
     transform: translateY(-3px);
   }
+  @media (max-width: 768px) {
+   flex-direction: column;
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  }
   @media (max-width: 480px) {
-    font-size: 0.85rem;
+   flex-direction: column;
+    font-size: clamp(0.8rem, 1.6vw, 0.9rem);
   }
 `;
 
@@ -440,8 +566,16 @@ const ContactIcon = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
+  @media (max-width: 1024px) {
+    width: 28px;
+    height: 28px;
+  }
+  @media (max-width: 768px) {
+    width: 26px;
+    height: 26px;
+  }
   @media (max-width: 480px) {
     width: 24px;
     height: 24px;
@@ -455,15 +589,23 @@ function Home() {
     setShowDetails(!showDetails);
   };
 
+  const scrollToProjects = (e) => {
+    e.preventDefault();
+    document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <PageWrapper>
       <HeroSection id="home">
         <Container>
           <HeroContainer>
             <HeroContent>
-              <HeroTitle>Welcome to<br></br>My Portfolio Website</HeroTitle>
-              <HeroText>Hi I'm Emmanuel!, I'm a passionate developer building innovative solutions.<br></br>Click the photo for personal information</HeroText>
-              <HeroButton href="#projects">View My Work</HeroButton>
+              <HeroTitle>Welcome to<br/> My Portfolio Website</HeroTitle>
+              <HeroText>
+                Hi, I'm Emmanuel! I'm a passionate developer building innovative solutions.<br />
+                Click the photo for personal information {'->'}
+              </HeroText>
+              <HeroButton onClick={scrollToProjects}>View My Work</HeroButton>
             </HeroContent>
             {showDetails ? (
               <DetailsCard isVisible={showDetails} onClick={toggleDetails}>
@@ -474,7 +616,7 @@ function Home() {
               </DetailsCard>
             ) : (
               <HeroImage
-                src="/pic4.png"
+                src="/pic5.png"
                 alt="Emmanuel S. Bitancor"
                 isVisible={!showDetails}
                 onClick={toggleDetails}
@@ -488,10 +630,10 @@ function Home() {
         <Container>
           <SectionTitle>About Me</SectionTitle>
           <AboutContent>
-            <AboutImage src="/pic5.png" alt="About Emmanuel" />
+            <AboutImage src="/pic7.png" alt="About Emmanuel" />
             <AboutTextContainer>
               <p>
-                I'm Emmanuel S. Bitancor, a dedicated Computer Science student with a passion for creating
+                I'm Emmanuel S. Bitancor, a dedicated Computer Science Student with a passion for creating
                 innovative web applications. Specializing in React and Node.js, I build scalable and
                 user-friendly solutions. My goal is to combine creativity and technical expertise to deliver
                 impactful digital experiences.
@@ -528,10 +670,12 @@ function Home() {
               <ProjectContent>
                 <ProjectTitle>COMSOC Journal System</ProjectTitle>
                 <ProjectDescription>
-                  A Web-based System built with React and styled-components, designed for College of Technology in Bohol Island State
-                  University - Bilar Campus. It serves as a platform for students to submit their journals, and showcase their Researching skills.
+                  A web-based system built with React, Node.js, designed for the College of Technology at Bohol Island State
+                  University - Bilar Campus. It serves as a platform for students to submit their journals and showcase their research skills.
                 </ProjectDescription>
-                <ProjectLink href="https://bisubilarctech-0adba2bc1c57.herokuapp.com/Ctech" target="_blank" rel="noopener noreferrer">View Project</ProjectLink>
+                <ProjectLink href="https://bisubilarctech-0adba2bc1c57.herokuapp.com/Ctech" target="_blank" rel="noopener noreferrer">
+                  View Site Project
+                </ProjectLink>
               </ProjectContent>
             </ProjectCard>
             <ProjectCard>
@@ -539,7 +683,7 @@ function Home() {
               <ProjectContent>
                 <ProjectTitle>Thesis Checker</ProjectTitle>
                 <ProjectDescription>
-                  A web-based tool for checking thesis papers for plagiarism and grammar issues.
+                  A web-based System built with React and Node.js for checking thesis papers for plagiarism and grammar issues.
                 </ProjectDescription>
                 <ProjectLink
                   href="#"
