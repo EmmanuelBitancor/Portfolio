@@ -600,7 +600,7 @@ function Home() {
         <Container>
           <HeroContainer>
             <HeroContent>
-              <HeroTitle>Welcome to<br/> My Portfolio Website</HeroTitle>
+              <HeroTitle>Hi there!</HeroTitle>
               <HeroText>
                 Hi, I'm Emmanuel! I'm a passionate developer building innovative solutions.<br />
                 Click the photo for personal information {'->'}
